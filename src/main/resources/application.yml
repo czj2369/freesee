@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: test
+  thymeleaf:
+    cache: false #开发阶段，建议关闭Thymeleaf的缓存
+    mode: LEGACYHTML5 #使用遗留的html5以去掉对html标签的校验
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+server:
+  port: 8080

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页</title>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- //for-mobile-apps -->
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="/css/contactstyle.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="/css/faqstyle.css" type="text/css" media="all"/>
+    <link href="/css/single.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/medile.css" rel='stylesheet' type='text/css'/>
+    <!-- banner-slider -->
+    <link href="/css/jquery.slidey.min.css" rel="stylesheet">
+    <!-- //banner-slider -->
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css"/>
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <!-- //js -->
+</head>
+
+<body>
+<style type="text/css">
+.imgContent{
+width:220px;
+height:308px;
+}
+</style>
+<!-- header -->
+<div class="header">
+    <div class="container">
+        <!--网站LOGO设置-->
+        <div class="w3layouts_logo">
+            <a href="/"><h1>Find<span>FreeMovies</span></h1></a>
+        </div>
+        <div class="w3_search">
+            <form action="#" th:action="@{/searchresult}" th:object="${search}" method="post" id="search">
+                <input type="text" th:field="*{searchName}" name="Search" placeholder="电影名称" required="">
+                <select name="type" id="type" form="search">
+                    <option value="vqq">电影</option>
+                    <option value="MJjuji">美剧</option>
+                    <option value="RJjuji">日剧</option>
+                    <option value="HJjuji">韩剧</option>
+                </select>
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- general -->
+<div class="general">
+    <h4 class="latest-text w3_latest_text">最新电影</h4>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                    <div class="w3_agile_featured_movies">
+                        <div class="col-md-3 w3l-movie-gride-agile" th:each="movie : ${movieList}">
+                            <a th:href="@{/watch(url=${movie.movieHref},type='vqq')}" class="hvr-shutter-out-horizontal">
+                                <img th:src="${movie.movieImgUrl}" th:title="${movie.movieName}" class="img-responsive imgContent" alt=" "/>
+                                <div class="w3l-action-icon">
+                                    <i class="fa fa-play-circle" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                <div class="w3l-movie-text">
+                                    <h6><a th:href="@{/watch(url=${movie.movieHref},type='vqq')}" th:text="${movie.movieName}"></a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="latest-text w3_latest_text">最新美剧</h4>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" aria-labelledby="home-tab">
+                    <div class="w3_agile_featured_movies">
+                        <div class="col-md-3 w3l-movie-gride-agile" th:each="movie : ${mjList}">
+                            <a th:href="@{/searchresult/episodes(url=${movie.movieHref},type='MJjuji')}" class="hvr-shutter-out-horizontal">
+                                <img th:src="${movie.movieImgUrl}" th:title="${movie.movieName}" class="img-responsive imgContent" alt=" "/>
+                                <div class="w3l-action-icon">
+                                    <i class="fa fa-play-circle" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                <div class="w3l-movie-text">
+                                    <h6><a th:href="@{/searchresult/episodes(url=${movie.movieHref},type='MJjuji')}" th:text="${movie.movieName}"></a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="latest-text w3_latest_text">最新日剧</h4>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" aria-labelledby="home-tab">
+                    <div class="w3_agile_featured_movies">
+                        <div class="col-md-3 w3l-movie-gride-agile" th:each="movie : ${rjList}">
+                            <a th:href="@{/searchresult/episodes(url=${movie.movieHref},type='RJjuji')}" class="hvr-shutter-out-horizontal">
+                                <img th:src="${movie.movieImgUrl}" th:title="${movie.movieName}" class="img-responsive imgContent" alt=" "/>
+                                <div class="w3l-action-icon">
+                                    <i class="fa fa-play-circle" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                                <div class="w3l-movie-text">
+                                    <h6><a th:href="@{/searchresult/episodes(url=${movie.movieHref},type='RJjuji')}" th:text="${movie.movieName}"></a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- //general -->
+
+</body>
+</html>

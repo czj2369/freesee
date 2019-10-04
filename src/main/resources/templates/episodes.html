@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<title>剧集</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<!-- //for-mobile-apps -->
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="/css/faqstyle.css" type="text/css" media="all" />
+<link href="/css/medile.css" rel='stylesheet' type='text/css' />
+<link href="/css/single.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="/css/contactstyle.css" type="text/css" media="all" />
+<!-- news-css -->
+<link rel="stylesheet" href="/news-css/news.css" type="text/css" media="all" />
+<!-- //news-css -->
+<!-- list-css -->
+<link rel="stylesheet" href="/list-css/list.css" type="text/css" media="all" />
+<!-- //list-css -->
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<!-- //font-awesome icons -->
+<!-- js -->
+<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+</head>
+
+<body>
+<!-- header -->
+	<div class="header">
+		<div class="container">
+			<div class="w3layouts_logo">
+				<a href="index.html"><h1>Find<span>FreeMovies</span></h1></a>
+			</div>
+			<div class="w3_search">
+				<form action="#" th:action="@{/searchresult}" th:object="${search}" method="post" id="search">
+					<input type="text" th:field="*{searchName}" name="Search" placeholder="电影名称" required="">
+					<select name="type" id="type" form="search">
+						<option value="vqq">电影</option>
+						<option value="MJjuji">美剧</option>
+						<option value="RJjuji">日剧</option>
+						<option value="HJjuji">韩剧</option>
+					</select>
+					<input type="submit" value="搜索">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+
+<!-- faq-banner -->
+	<div class="faq">
+			<div class="container">
+				<div class="agileits-news-top">
+					<ol class="breadcrumb">
+						<li><a href="/">首页</a></li>
+						<li class="active">结果</li>
+						<li class="active">集数</li>
+					</ol>
+				</div>
+				<div class="agileinfo-news-top-grids">
+					<div class="col-md-8 wthree-top-news-left">
+						<div class="wthree-news-left">
+							<div class="wthree-news-left-img" th:object="${episodes}">
+								<div id="fb-root"></div>
+                                <div th:each="s: ${episodes}">
+                                    <div>
+                                        <a th:href="@{/watch(url=${s.key},type=${searchType})}" th:text="${s.value}"></a>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+						<div class="news-related">
+
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
