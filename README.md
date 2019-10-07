@@ -1,8 +1,14 @@
 # freesee
 基于SpringBoot的一个简单的javaWeb项目，实现了在线搜索电影、美剧、日剧的功能，并提供在线观看的功能。</br>
 
+# 使用到的框架技术：
+1、SpringBoot</br>
+2、Thymeleaf</br>
+3、BootStrap</br>
+4、Jsoup</br>
 环境：JDK1.8</br>
 编译工具：Idea</br>
+
 # 效果图展示
 ![首页](https://github.com/czj2369/freesee/blob/freesee/1.png)
 ![首页](https://github.com/czj2369/freesee/blob/freesee/2.png)
