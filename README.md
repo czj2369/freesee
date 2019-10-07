@@ -6,6 +6,7 @@
 2、Thymeleaf</br>
 3、BootStrap</br>
 4、Jsoup</br>
+5、Dplayer https://github.com/MoePlayer/DPlayer
 环境：JDK1.8</br>
 编译工具：Idea</br>
 
