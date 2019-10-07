@@ -23,3 +23,4 @@
 解决：进入项目的根目录，删除除了src文件夹和pom.xml以外的所有文件，重新进入项目，此时右下角会有提示，选择Add as Maven Project，并且等待依赖的导入。</br>
 2、提示没有SDK</br>
 解决：File->Project Structure->Project，在Project SDK，选择JDK所在的位置即可。</br>
+**注：本软件不得用于商业用途,仅做学习交流。**
