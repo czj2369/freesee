@@ -22,6 +22,9 @@ public class HomeController {
     @Autowired
     DealUrlService dealRjUrlImpl;
 
+    @Autowired
+    DealUrlService dealHjUrlImpl;
+
     @RequestMapping(value = "/")
     public String index(Model model){
         System.out.println("有人来啦~");
@@ -29,9 +32,12 @@ public class HomeController {
         List<Movie> movieList = dealMovieUrlImpl.getLastestMovie();
         List<Movie> mjList = dealMjUrlImpl.getLastestMovie();
         List<Movie> rjList = dealRjUrlImpl.getLastestMovie();
+        //List<Movie> rjList = null;
+        List<Movie> hjList = dealHjUrlImpl.getLastestMovie();
         model.addAttribute("movieList",movieList);
         model.addAttribute("mjList",mjList);
         model.addAttribute("rjList",rjList);
+        model.addAttribute("hjList",hjList);
         model.addAttribute("search",search);
         return "index";
     }

@@ -19,7 +19,7 @@
 
 /*property
     $ref, decycle, forEach, get, indexOf, isArray, keys, length, push,
-    retrocycle, set, stringify, test
+    retrocycle, set, stringify, resources
 */
 
 if (typeof JSON.decycle !== "function") {

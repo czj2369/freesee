@@ -9,7 +9,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -69,17 +68,20 @@ public class DealMovieUrlImpl implements DealUrlService{
             Document doc = connect.get();
             search.setImgUrl("http:"+doc.select("body > div.search_container > div.wrapper " +
                     "> div:nth-child(1) > div:nth-child(2) > div._infos > div > a > img").attr("src"));
-            search.setSearchName(doc.select("body > div.search_container > div.wrapper > " +
-                    "div:nth-child(1) > div:nth-child(2) > div._infos > div > a > img").attr("alt"));
+            search.setSearchName(searchName);
             search.setBriefContent(doc.select("body > div.search_container > div.wrapper > " +
                     "div:nth-child(1) > div:nth-child(2) > div._infos > div > div > div.info_item.info_item_desc > span.desc_text").text());
             Elements href = dealDoc(chooseSearchNet,doc);//根据页面搜索情况不同分情况处理标签
             if(href != null && href.size()>0){
                 Map<String,String> urlList = new HashMap<>();
                 for (Element e:href) {
-                    if(!(e.attr("href").contains("javascript"))){
-                        String str1 = parseUrl+e.attr("href");
+                    if(!doc.html().contains("c-inline-play")){
+                        String str1 = e.attr("href");
                         String title = (e.attr("title")!=null && e.attr("title")!="")?e.attr("title"):searchName;
+                        urlList.put(str1,title);
+                    }else{
+                        String str1 = e.attr("href");
+                        String title = (e.select("em").text()!=null && e.select("em").text()!="")?e.select("em").text():searchName;
                         urlList.put(str1,title);
                     }
                 }
@@ -124,26 +126,36 @@ public class DealMovieUrlImpl implements DealUrlService{
     private static Elements dealDoc(String chooseSearchNet,Document doc) {
         String docHtml = doc.html();
         Elements res = null;
-        if(chooseSearchNet.equals("vqq")){
-            if(docHtml.contains("inline-telelist")){
-                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) >" +
-                        " div:nth-child(2) > div._playlist > div > div > div > div> a");
-            }else if(docHtml.contains("inline-series-list")){
-                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > " +
-                        "div.result_item.result_item_v > div._playlist > div > div > div > span > div > a");
-            } else if(docHtml.contains("c-inline-play")){
-                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > " +
-                        "div.result_item.result_item_v > div._playlist > div > a");
-            }
-        } else if(chooseSearchNet.equals("iqiyi")){
-            if(docHtml.contains("info_item_bottom")){
-                res = doc.select("body > div.page-search > div.container.clearfix " +
-                        "> div.search_result_main > div > div.mod_search_result > div > ul " +
-                        "> li> div > div.info_item_bottom > div> div > a");
-            }
-        }else if(chooseSearchNet.equals("youku")){
-            res = doc.select("#bpmodule-main > div.sk-result-list > div:nth-child(1) > div.mod-main > div.mod-play.mod-film-play > div > a.btn.btn-play.active");
+        if(docHtml.contains("c-inline-play")){
+            res = doc.select("body > div.search_container > div.wrapper > " +
+                    "div:nth-child(1) > div:nth-child(2) > div._infos > div > h2 > a");
+        }else if(docHtml.contains("mod_figures mod_figure_h")){
+            res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > div.result_item.result_item_v > " +
+                    "div.result_video_fragment > div > ul > li> a");
+        }else{
+            res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > " +
+                    "div.result_series.result_intention > div.mod_figures.mod_figure_v > ul > li> strong > a");
         }
+//        if(chooseSearchNet.equals("vqq")){
+//            if(docHtml.contains("inline-telelist")){
+//                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) >" +
+//                        " div:nth-child(2) > div._playlist > div > div > div > div> a");
+//            }else if(docHtml.contains("inline-series-list")){
+//                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > " +
+//                        "div.result_item.result_item_v > div._playlist > div > div > div > span > div > a");
+//            } else if(docHtml.contains("c-inline-play")){
+//                res = doc.select("body > div.search_container > div.wrapper > div:nth-child(1) > " +
+//                        "div.result_item.result_item_v > div._playlist > div > a");
+//            }
+//        } else if(chooseSearchNet.equals("iqiyi")){
+//            if(docHtml.contains("info_item_bottom")){
+//                res = doc.select("body > div.page-search > div.container.clearfix " +
+//                        "> div.search_result_main > div > div.mod_search_result > div > ul " +
+//                        "> li> div > div.info_item_bottom > div> div > a");
+//            }
+//        }else if(chooseSearchNet.equals("youku")){
+//            res = doc.select("#bpmodule-main > div.sk-result-list > div:nth-child(1) > div.mod-main > div.mod-play.mod-film-play > div > a.btn.btn-play.active");
+//        }
         return res;
     }
 
@@ -154,7 +166,23 @@ public class DealMovieUrlImpl implements DealUrlService{
 
     @Override
     public String getPlayUrl(String url) {
-        return null;
+        String res = "";
+        try {
+            Document doc = Jsoup.connect(url).get();
+            //获取的标签是播放器的地址
+            if(!doc.html().contains("c-inline-play")){
+                Elements elements = doc.select("body > div:nth-child(3) > div.site_container.container_detail_top > " +
+                        "div > div > div > div._playsrc > div:nth-child(3) > a:nth-child(1)");
+                if(elements.attr("href")!=""){
+                    res = prefixUrl+elements.attr("href");
+                }else{
+                    res = prefixUrl+url;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     /**
@@ -164,15 +192,17 @@ public class DealMovieUrlImpl implements DealUrlService{
      * @return
      */
     public Search getSearch(String chooseSearchNet,String searchName){
+        //搜索得到结果封装成Search对象
         Search search = searchFrom(chooseSearchNet,searchName, parseUrl);
-        Map<String,String> parseUrlList = search.getParseUrlList();
-        Map<String,String> afterChange = new HashMap<>();
+ //       Map<String,String> parseUrlList = search.getParseUrlList();
+//        Map<String,String> afterChange = new HashMap<>();
 
-        for (Map.Entry<String,String> e:parseUrlList.entrySet()) {
-            afterChange.put(parseUrl2m3u8(e.getKey(),prefixUrl),e.getValue());
-        }
+        //如果可以获得视频的m3u8地址，则进行转换，如果不行则直接解析播放
+//        for (Map.Entry<String,String> e:parseUrlList.entrySet()) {
+//            afterChange.put(parseUrl2m3u8(e.getKey(),prefixUrl),e.getValue());
+//        }
 
-        search.setParseUrlList(afterChange);
+        //search.setParseUrlList(afterChange);
         return search;
     }
 
@@ -192,7 +222,7 @@ public class DealMovieUrlImpl implements DealUrlService{
                 Movie movie = new Movie();
                 movie.setMovieImgUrl("http:"+e.get(i).select("img").attr("src"));
                 movie.setMovieName(e.get(i).select("img").attr("alt"));
-                movie.setMovieHref(prefixUrl+e.get(i).attr("href"));
+                movie.setMovieHref(e.get(i).attr("href"));
                 movieList.add(movie);
             }
         } catch (IOException e) {

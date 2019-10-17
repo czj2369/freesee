@@ -1,15 +1,14 @@
 package movie.controller;
 
 import movie.domain.Search;
-import movie.service.DealRjUrlImpl;
 import movie.service.DealUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -24,8 +23,11 @@ public class ResultController {
     @Autowired
     DealUrlService dealRjUrlImpl;
 
+    @Autowired
+    DealUrlService dealHjUrlImpl;
+
     @RequestMapping(value = "/searchresult")
-    public String single(Model model, String searchName, @RequestParam(value = "type")String searchType){
+    public String single(Model model, @RequestParam(value = "searchName") String searchName, @RequestParam(value = "type")String searchType){
         //Search search = DealUrl.getSearch("vqq",searchName);
         Search search = null;
         if(searchType.equals("vqq")){
@@ -34,9 +36,15 @@ public class ResultController {
             search = dealMjUrlImpl.getSearch(searchType,searchName);
         }else if(searchType.equals("RJjuji")){
             search = dealRjUrlImpl.getSearch(searchType,searchName);
+        }else if(searchType.equals("HJjuji")){
+            search = dealHjUrlImpl.getSearch(searchType,searchName);
         }
         model.addAttribute("search",search);
         model.addAttribute("searchType",searchType);
+        if (search.getParseUrlList()==null){
+            return "error";
+        }
+
         return "searchresult";
     }
 
@@ -50,6 +58,8 @@ public class ResultController {
             map = dealMjUrlImpl.getEpisodes(url);
         }else if(searchType.equals("RJjuji")){
             map = dealRjUrlImpl.getEpisodes(url);
+        }else if(searchType.equals("HJjuji")){
+            map = dealHjUrlImpl.getEpisodes(url);
         }
         model.addAttribute("episodes",map);
         model.addAttribute("search",search);

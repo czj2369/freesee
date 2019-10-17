@@ -28,15 +28,16 @@
 </head>
 
 <body>
+
 <!-- header -->
 	<div class="header">
 		<div class="container">
 			<div class="w3layouts_logo">
-				<a href="index.html"><h1>Find<span>FreeMovies</span></h1></a>
+				<a href="/"><h1>Find<span>FreeMovies</span></h1></a>
 			</div>
 			<div class="w3_search">
 				<form action="#" th:action="@{/searchresult}" th:object="${search}" method="post" id="search">
-					<input type="text" th:field="*{searchName}" name="Search" placeholder="电影名称" required="">
+					<input type="text" th:field="*{searchName}" name="Search" placeholder="名称" required="">
 					<select name="type" id="type" form="search">
 						<option value="vqq">电影</option>
 						<option value="MJjuji">美剧</option>

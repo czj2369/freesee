@@ -27,7 +27,7 @@ function b64_hmac_md5(key, data) { return binl2b64(core_hmac_md5(key, data)); }
 function str_hmac_md5(key, data) { return binl2str(core_hmac_md5(key, data)); }
 
 /*
- * Perform a simple self-test to see if the VM is working
+ * Perform a simple self-resources to see if the VM is working
  */
 function md5_vm_test()
 {

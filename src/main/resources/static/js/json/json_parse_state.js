@@ -51,7 +51,7 @@
 /*property
     acomma, avalue, b, call, colon, container, exec, f, false, firstavalue,
     firstokey, fromCharCode, go, hasOwnProperty, key, length, n, null, ocomma,
-    okey, ovalue, pop, prototype, push, r, replace, slice, state, t, test,
+    okey, ovalue, pop, prototype, push, r, replace, slice, state, t, resources,
     true
 */
 

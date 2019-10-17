@@ -1,42 +1,60 @@
-<html>
-	<head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<title>错误</title>
+	<!-- for-mobile-apps -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="referrer" content="no-referrer">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<!-- //for-mobile-apps -->
+	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="/css/faqstyle.css" type="text/css" media="all" />
+	<link href="/css/medile.css" rel='stylesheet' type='text/css' />
+	<link href="/css/single.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="/css/contactstyle.css" type="text/css" media="all" />
+	<!-- news-css -->
+	<link rel="stylesheet" href="/news-css/news.css" type="text/css" media="all" />
+	<!-- //news-css -->
+	<!-- list-css -->
+	<link rel="stylesheet" href="/list-css/list.css" type="text/css" media="all" />
+	<!-- //list-css -->
+	<!-- font-awesome icons -->
+	<link rel="stylesheet" href="/css/font-awesome.min.css" />
+	<!-- //font-awesome icons -->
+	<!-- js -->
+	<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
 
-		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-				width: 100%;
-				height: 100%;
-				color: #B0BEC5;
-				display: table;
-				font-weight: 100;
-				font-family: 'Lato';
-			}
-
-			.container {
-				text-align: center;
-				display: table-cell;
-				vertical-align: middle;
-			}
-
-			.content {
-				text-align: center;
-				display: inline-block;
-			}
-
-			.title {
-				font-size: 42px;
-				margin-bottom: 40px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="content">
-				<div class="title">很抱歉，无法找到您需要的资源，或者重新搜索！</div>
-			</div>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="header">
+	<div class="container">
+		<div class="w3layouts_logo">
+			<a href="/"><h1>Find<span>FreeMovies</span></h1></a>
 		</div>
-	</body>
+		<div class="w3_search">
+			<form action="#" th:action="@{/searchresult}" th:object="${search}" method="post" id="search">
+				<input type="text" name="searchName" placeholder="名称" required="">
+				<select name="type" id="type" form="search">
+					<option value="vqq">电影</option>
+					<option value="MJjuji">美剧</option>
+					<option value="RJjuji">日剧</option>
+					<option value="HJjuji">韩剧</option>
+				</select>
+				<input type="submit" value="搜索">
+			</form>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="content">
+		<div class="title">很抱歉，无法找到您需要的资源，请选择正确分类并重新搜索！</div>
+	</div>
+</div>
+</body>
 </html>

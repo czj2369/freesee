@@ -70,8 +70,8 @@ public class DealRjUrlImpl implements DealUrlService{//获取搜索结果页面
             Connection connect = Jsoup.connect(url);
 
             Document doc = connect.get();
-            Elements e = doc.select("body > div.warp > div > div.main-inner > div:nth-child(2) " +
-                    "> div.mod-main > div > ul > li> a");//爬取页数
+            Elements e = doc.select("body > div.warp > div > div.main-inner > " +
+                    "div:nth-child(3) > div.mod-main > div > ul > li> a");//爬取集数
             for (Element href:e){
                 Episodes.put(addpre+href.attr("href"),href.text());//播放页面链接，第几集
             }
@@ -124,10 +124,10 @@ public class DealRjUrlImpl implements DealUrlService{//获取搜索结果页面
                     .get();
             String docHtml = doc.html();
             //需要获得区域selector
-            Elements e = doc.select("body > div.warp > div > div:nth-child(2) > div.mod-main.bd > div:nth-child(1) > ul > li");
+            Elements e = doc.select(".m-item");
             int getNum = 8;//需要获取的个数
             //创建Movie对象，并对里面的属性进行赋值（值的来源从上面的e变量的标签区域获取）
-            for(int i=0;i<getNum;i++){
+            for(int i=8;i<getNum+8;i++){
                 Movie movie = new Movie();
                 String imgUrl = e.get(i).select("a > img").attr("data-original");
                 movie.setMovieImgUrl(imgUrl);

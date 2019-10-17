@@ -1,11 +1,20 @@
+server:
+  port: 8080
 spring:
   profiles:
-    active: test
+    active: resources
   thymeleaf:
     cache: false #开发阶段，建议关闭Thymeleaf的缓存
     mode: LEGACYHTML5 #使用遗留的html5以去掉对html标签的校验
     prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
-server:
-  port: 8080
+
+  datasource:
+    url: jdbc:mysql://localhost/resources
+    password: root
+    username: 123456a!
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
